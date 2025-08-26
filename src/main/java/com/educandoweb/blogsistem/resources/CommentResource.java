@@ -29,9 +29,9 @@ public class CommentResource {
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
-    public ResponseEntity<Comment> insert(@RequestBody Comment post){
-        Comment obj = service.insert(post);
+    @PostMapping(value = "/{userId}/{postId}")
+    public ResponseEntity<Comment> create(@PathVariable Long userId,@PathVariable Long postId, @RequestBody Comment comment){
+        Comment obj = service.createComment(userId,postId,comment);
         return ResponseEntity.ok().body(obj);
     }
 }
