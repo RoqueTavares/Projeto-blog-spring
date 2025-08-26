@@ -16,6 +16,9 @@ public class PostService {
     @Autowired
     private PostRepository repository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<Post> findAll(){
         return repository.findAll();
     }
@@ -25,7 +28,9 @@ public class PostService {
         return user.orElse(null);
     }
 
-    public Post insert(Post post){
+    public Post createPost(Long userId, Post post){
+        User user = userRepository.findById(userId).get();
+        post.setUser(user);
         return repository.save(post);
     }
 

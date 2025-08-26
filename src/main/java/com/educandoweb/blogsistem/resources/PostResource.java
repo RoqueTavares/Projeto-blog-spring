@@ -29,9 +29,10 @@ public class PostResource {
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
-    public ResponseEntity<Post> insert(@RequestBody Post post){
-        Post obj = service.insert(post);
-        return ResponseEntity.ok().body(obj);
+    @PostMapping(value = "/{userid}")
+    public ResponseEntity<Post> save(@PathVariable Long userid,@RequestBody Post obj){
+        Post post = service.createPost(userid,obj);
+        return ResponseEntity.ok().body(post);
+
     }
 }

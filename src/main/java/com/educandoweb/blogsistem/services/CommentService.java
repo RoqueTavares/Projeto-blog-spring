@@ -1,9 +1,7 @@
 package com.educandoweb.blogsistem.services;
 
 import com.educandoweb.blogsistem.entities.Comment;
-import com.educandoweb.blogsistem.entities.Post;
 import com.educandoweb.blogsistem.repositories.CommentRepository;
-import com.educandoweb.blogsistem.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

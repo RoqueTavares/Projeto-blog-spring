@@ -1,6 +1,7 @@
 package com.educandoweb.blogsistem.services;
 
 import com.educandoweb.blogsistem.entities.User;
+import com.educandoweb.blogsistem.repositories.PostRepository;
 import com.educandoweb.blogsistem.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     public List<User> findAll(){
         return repository.findAll();
     }
@@ -26,6 +30,8 @@ public class UserService {
     public User insert(User user){
         return repository.save(user);
     }
+
+
 
 
 }
