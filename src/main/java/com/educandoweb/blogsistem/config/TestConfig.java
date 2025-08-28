@@ -42,12 +42,13 @@ public class TestConfig implements CommandLineRunner {
         Category category_1 = new Category(null,"Viagem","post sobre viagens","viagem");
 
 
-
-
         userRepository.saveAll(Arrays.asList(user_1,user_2));
         postRepository.save(post_1);
         commentRepository.save(comment_1);
         categoryRepository.save(category_1);
+
+        post_1.getCategories().add(category_1);
+        postRepository.save(post_1);
 
     }
 }

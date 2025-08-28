@@ -1,9 +1,12 @@
 package com.educandoweb.blogsistem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -16,6 +19,10 @@ public class Category implements Serializable {
     private String name;
     private String description;
     private String slug;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    private Set<Post> posts = new HashSet<>();
 
     public Category(){
 
@@ -58,6 +65,10 @@ public class Category implements Serializable {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
     }
 
     @Override

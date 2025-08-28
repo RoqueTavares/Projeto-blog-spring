@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_post")
@@ -31,6 +29,14 @@ public class Post implements Serializable {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "tb_post_category",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name="category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
 
     public Post() {
 
@@ -102,7 +108,13 @@ public class Post implements Serializable {
         this.user = user;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
 
     @Override
     public boolean equals(Object o) {

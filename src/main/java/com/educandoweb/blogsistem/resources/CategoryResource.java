@@ -28,9 +28,9 @@ public class CategoryResource {
         return ResponseEntity.ok().body(category);
     }
 
-    @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category category) {
-        Category obj = service.insert(category);
+    @PostMapping(value = "/{postId}")
+    public ResponseEntity<Category> create(@PathVariable Long postId, @RequestBody Category category) {
+        Category obj = service.create(postId,category);
         return ResponseEntity.ok().body(obj);
     }
 }
