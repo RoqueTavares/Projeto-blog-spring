@@ -2,6 +2,7 @@ package com.educandoweb.blogsistem.config;
 
 import com.educandoweb.blogsistem.entities.*;
 import com.educandoweb.blogsistem.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,15 +28,27 @@ public class TestConfig implements CommandLineRunner {
     private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PermissaoRepository permissaoRepository;
 
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
 
-        Role roleAluno = new Role(null, "ROLE_ALUNO");
+        Permissao pAccount = new Permissao(null, "CREATE_ACCOUT");
+        Permissao pListAccount = new Permissao(null, "LIST_ACCOUNT");
+        Permissao pDeleteAccount = new Permissao(null, "DELETE_ACCOUNT");
+
+        permissaoRepository.saveAll(Arrays.asList(pAccount, pListAccount, pDeleteAccount));
+
+        Role roleNormal = new Role(null, "ROLE_NORMAl");
         Role roleAdmin = new Role(null, "ROLE_ADMIN");
 
-        roleRepository.saveAll(Arrays.asList(roleAluno, roleAdmin));
+        roleNormal.getPermissoes().add(pAccount);
+        roleAdmin.getPermissoes().addAll(Arrays.asList(pAccount, pListAccount, pDeleteAccount));
+
+        roleRepository.saveAll(Arrays.asList(roleNormal, roleAdmin));
 
         User user_1 = new User(null,"Roque","Roque@gmail.com", passwordEncoder.encode("123456"), LocalDateTime.now());
         User user_2 = new User(null,"Teste","Teste@gmail.com", passwordEncoder.encode("123456"), LocalDateTime.now());
@@ -47,7 +60,7 @@ public class TestConfig implements CommandLineRunner {
 
 
         user_1.getRoles().add(roleAdmin);
-        user_2.getRoles().add(roleAluno);
+        user_2.getRoles().add(roleNormal);
 
         userRepository.saveAll(Arrays.asList(user_1, user_2));
 

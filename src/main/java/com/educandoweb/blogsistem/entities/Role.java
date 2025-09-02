@@ -21,7 +21,9 @@ public class Role implements Serializable, GrantedAuthority {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany()
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_permissao_role",
             joinColumns = @JoinColumn(name = "role_id"),
