@@ -1,5 +1,6 @@
 package com.educandoweb.blogsistem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -17,6 +18,7 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String roleName;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 

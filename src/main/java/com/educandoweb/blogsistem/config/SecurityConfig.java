@@ -22,11 +22,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
+
                 .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().authenticated() // Exige autenticação para QUALQUER requisição
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .formLogin(withDefaults()); // Habilita o formulário de login padrão do Spring
+                .formLogin(withDefaults());
         return http.build();
     }
 
