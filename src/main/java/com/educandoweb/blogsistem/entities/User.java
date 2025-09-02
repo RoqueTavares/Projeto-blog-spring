@@ -74,7 +74,16 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        authorities.addAll(getRoles());
+
+        for(Role role : this.getRoles()){
+            authorities.addAll(role.getPermissoes());
+        }
+
+        System.out.println("Auorizações do usuario: " + authorities);
+        return authorities;
     }
 
     public String getPassword() {
