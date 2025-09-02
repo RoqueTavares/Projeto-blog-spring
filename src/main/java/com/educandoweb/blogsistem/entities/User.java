@@ -76,7 +76,7 @@ public class User implements Serializable, UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
 
-        authorities.addAll(getRoles());
+        authorities.addAll(this.getRoles());
 
         for(Role role : this.getRoles()){
             authorities.addAll(role.getPermissoes());
